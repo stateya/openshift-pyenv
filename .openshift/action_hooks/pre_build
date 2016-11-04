@@ -1,9 +1,5 @@
 #!/bin/bash
 
-echo "hello pre_build"
-
-. ${OPENSHIFT_REPO_DIR}.openshift/action_hooks/bashrc
-
 PYTHON_VERSION=3.5.2
 if [ -e ${OPENSHIFT_REPO_DIR}.python-version ]
 then
@@ -19,6 +15,8 @@ then
   git clone https://github.com/yyuu/pyenv.git ${OPENSHIFT_DATA_DIR}/pyenv
   rm -rfv ${OPENSHIFT_DATA_DIR}venv
 fi
+
+. ${OPENSHIFT_REPO_DIR}.openshift/action_hooks/bashrc
 
 CURRENT_VERSION=`pyenv versions | grep '*'`
 echo "current version is \"${CURRENT_VERSION}\""
