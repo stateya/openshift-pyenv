@@ -1,5 +1,5 @@
 =======================================================================
-  Openshift Pyenv QuickStart
+  Openshift Pyenv
 =======================================================================
 
 
@@ -9,7 +9,11 @@ Intall with default python version(3.5.2)
 
 ::
 
-  rhc create pyenv-app --from-code https://github.com/stateya/openshift-pyenv-quickstart
+  (Your PC)$ rhc create-app app diy-0.1
+  (Your PC)$ cd app
+  (Your PC)$ git remote add upstream https://github.com/stateya/openshift-pyenv
+  (Your PC)$ git pull -s recursive -X ours upstream master
+  (Your PC)$ git push origin master
 
 
 Change Python vesion
