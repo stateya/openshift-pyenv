@@ -1,0 +1,22 @@
+#! /bin/bash
+
+PYTHON_VERSION=2.7.9
+if [ -e ${OPENSHIFT_REPO_DIR}.python-version ]
+then
+  echo "use ${OPENSHIFT_REPO_DIR}.python-version"
+  PYTHON_VERSION=`cat ${OPENSHIFT_REPO_DIR}.python-version`
+fi
+
+. ${OPENSHIFT_REPO_DIR}.openshift/action_hooks/bashrc
+
+if [ ! -d ${OPENSHIFT_DATA_DIR}/pyenv ]
+then
+  echo "create ${OPENSHIFT_DATA_DIR}/pyenv, because is is not found."
+  git clone https://github.com/yyuu/pyenv.git ${OPENSHIFT_DATA_DIR}/pyenv
+  rm -rfv ${OPENSHIFT_DATA_DIR}venv
+fi
+
+pyenv uninstall ${PYTHON_VERSION}
+pyenv install ${PYTHON_VERSION}
+pyenv global ${PYTHON_VERSION}
+pyenv rehash

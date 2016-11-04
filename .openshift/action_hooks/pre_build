@@ -1,0 +1,48 @@
+#!/bin/bash
+
+echo "hello pre_build"
+
+. ${OPENSHIFT_REPO_DIR}.openshift/action_hooks/bashrc
+
+PYTHON_VERSION=3.5.2
+if [ -e ${OPENSHIFT_REPO_DIR}.python-version ]
+then
+  echo "use ${OPENSHIFT_REPO_DIR}.python-version"
+  PYTHON_VERSION=`cat ${OPENSHIFT_REPO_DIR}.python-version`
+fi
+
+echo "specified python version is ${PYTHON_VERSION}"
+
+if [ ! -d ${OPENSHIFT_DATA_DIR}/pyenv ]
+then
+  echo "create ${OPENSHIFT_DATA_DIR}/pyenv, because is is not found."
+  git clone https://github.com/yyuu/pyenv.git ${OPENSHIFT_DATA_DIR}/pyenv
+  rm -rfv ${OPENSHIFT_DATA_DIR}venv
+fi
+
+CURRENT_VERSION=`pyenv versions | grep '*'`
+echo "current version is \"${CURRENT_VERSION}\""
+IS_SAME_VERSION=`expr "${CURRENT_VERSION}" : "* ${PYTHON_VERSION}"`
+if [ "${CURRENT_VERSION}" != "* ${PYTHON_VERSION}" ]
+then
+  rm -rfv ${OPENSHIFT_DATA_DIR}venv
+  pyenv install ${PYTHON_VERSION}
+  pyenv global ${PYTHON_VERSION}
+  pyenv rehash
+fi
+
+PY_MAJOUR_VER=`echo ${PYTHON_VERSION} | cut -d. -f1`
+if [ ! -d ${OPENSHIFT_DATA_DIR}venv ] && (( ${PY_MAJOUR_VER} >= 3 ))
+then
+  echo "create ${OPENSHIFT_DATA_DIR}venv, because it is not found."
+  python -m venv ${OPENSHIFT_DATA_DIR}venv
+  source ${OPENSHIFT_DATA_DIR}venv/bin/activate
+  pip install --upgrade pip
+elif [ ! -d ${OPENSHIFT_DATA_DIR}venv ] && (( ${PY_MAJOUR_VER} >= 2 ))
+then
+  echo "create ${OPENSHIFT_DATA_DIR}venv, because it is not found."
+  pip install virtualenv
+  virtualenv ${OPENSHIFT_DATA_DIR}venv
+  source ${OPENSHIFT_DATA_DIR}venv/bin/activate
+  pip install --upgrade pip
+fi
