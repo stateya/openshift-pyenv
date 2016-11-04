@@ -2,9 +2,6 @@
 
 . ${OPENSHIFT_REPO_DIR}.openshift/action_hooks/bashrc
 source ${OPENSHIFT_DATA_DIR}venv/bin/activate
-export LANG='en_US.UTF-8'
-export LC_ALL='en_US.UTF-8'
-export LC_LANG='en_US.UTF-8'
 
 if [ -e ${OPENSHIFT_REPO_DIR}/requirements.txt ]
 then
