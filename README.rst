@@ -1,5 +1,5 @@
 =======================================================================
-  Openshift Pyenv
+  Openshift pyenv
 =======================================================================
 
 
@@ -41,7 +41,7 @@ Error for long time
   To ssh://<user>@<app-name>-<name>.rhcloud.com/~/git/<app-name>.git/
      xxxx..xxxxx  master -> master
   error: failed to push some refs to 'ssh://<user>@<app-name>-<name>.rhcloud.com/~/git/<app-name>.git/'
-  pyenv: version `3.5.2' is not installed (set by <repo path>/.python-version)
+
 
 Do this when the above
 
