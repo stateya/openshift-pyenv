@@ -5,7 +5,7 @@ source ${OPENSHIFT_DATA_DIR}venv/bin/activate
 
 if [ -e ${OPENSHIFT_REPO_DIR}/requirements.txt ]
 then
-  pip install -r ${OPENSHIFT_REPO_DIR}/requirements.txt
+  pip install -r ${OPENSHIFT_REPO_DIR}/requirements.txt --cache-dir=${OPENSHIFT_DATA_DIR}.pip_cache
 fi
 
 nohup ${OPENSHIFT_REPO_DIR}diy/test_server.py |& /usr/bin/logshifter -tag app &
